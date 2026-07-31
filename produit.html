@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Produit — Atlas Wear</title>
+  <meta name="description" content="Découvrez les pièces Atlas Wear en détail : photos, tailles disponibles et commande directe via WhatsApp." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container">
+      <a href="index.html" class="logo">Atlas<span>Wear</span></a>
+
+      <nav class="main-nav">
+        <a href="index.html">Accueil</a>
+        <a href="collection.html">Collection</a>
+        <a href="apropos.html">À propos</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+
+      <div class="header-actions">
+        <a href="contact.html" class="btn btn-outline">Nous contacter</a>
+        <button class="nav-toggle" aria-label="Ouvrir le menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="section" id="product-section" style="display:none;">
+      <div class="container">
+
+        <p class="breadcrumb" id="product-breadcrumb"></p>
+
+        <div class="product-page">
+          <div class="gallery">
+            <div class="gallery-main" id="gallery-main"></div>
+            <div class="gallery-thumbs" id="gallery-thumbs"></div>
+          </div>
+
+          <div class="product-info">
+            <div class="product-card-category" id="product-category"></div>
+            <h1 id="product-name"></h1>
+            <p class="product-price" id="product-price"></p>
+            <p class="product-description" id="product-description"></p>
+
+            <div class="size-selector">
+              <span class="filter-label">Taille</span>
+              <div class="size-options" id="size-options"></div>
+              <p class="size-warning" id="size-warning">Merci de choisir une taille avant de commander.</p>
+            </div>
+
+            <div class="product-actions">
+              <a href="#" class="btn btn-whatsapp btn-block" id="order-btn" target="_blank" rel="noopener">Commander via WhatsApp</a>
+              <a href="collection.html" class="section-link">← Retour au catalogue</a>
+            </div>
+
+            <ul class="product-notes">
+              <li>Livraison partout au Maroc, expédition depuis Casablanca</li>
+              <li>Pièce produite en petite série — stock limité</li>
+              <li>Paiement à la livraison ou par transfert, à confirmer sur WhatsApp</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="section" id="not-found-section" style="display:none;">
+      <div class="container" style="text-align:center;">
+        <span class="eyebrow">Oups</span>
+        <h1 class="section-title">Produit introuvable</h1>
+        <p style="color:var(--color-gray); max-width:480px; margin:16px auto 32px;">Ce produit n'existe plus ou le lien est incorrect.</p>
+        <a href="collection.html" class="btn btn-primary">Voir toute la collection</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="logo">Atlas<span>Wear</span></a>
+          <p>Prêt-à-porter streetwear à touche marocaine, conçu et produit en petites séries à Casablanca.</p>
+        </div>
+
+        <div class="footer-col">
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="collection.html">Collection</a></li>
+            <li><a href="apropos.html">À propos</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Boutique</h4>
+          <ul>
+            <li><a href="contact.html">12 Rue Ibnou Khaldoun, Gauthier, Casablanca</a></li>
+            <li><a href="contact.html">Lun – Sam : 10h00 – 20h00</a></li>
+            <li><a href="contact.html">Dimanche : 14h00 – 19h00</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Suivez-nous</h4>
+          <div class="social-links">
+            <a href="https://instagram.com/atlaswear.ma" target="_blank" rel="noopener" aria-label="Instagram">IG</a>
+            <a href="https://facebook.com/atlaswear.ma" target="_blank" rel="noopener" aria-label="Facebook">FB</a>
+            <a href="https://wa.me/2126XXXXXXXX" target="_blank" rel="noopener" aria-label="WhatsApp">WA</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>© 2026 Atlas Wear. Tous droits réservés.</span>
+        <span>Casablanca, Maroc</span>
+      </div>
+    </div>
+  </footer>
+
+  <a class="whatsapp-float" href="#" target="_blank" rel="noopener" aria-label="Contacter sur WhatsApp">WA</a>
+
+  <script src="js/products.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const product = PRODUCTS.find((p) => p.id === params.get("id"));
+
+    if (!product) {
+      document.getElementById("not-found-section").style.display = "block";
+    } else {
+      document.getElementById("product-section").style.display = "block";
+
+      let selectedSize = null;
+      let activeView = 0;
+
+      document.title = `${product.name} — Atlas Wear`;
+
+      document.getElementById("product-breadcrumb").innerHTML =
+        `<a href="index.html">Accueil</a> / <a href="collection.html">Collection</a> / ${product.category} / ${product.name}`;
+
+      document.getElementById("product-category").textContent = product.category;
+      document.getElementById("product-name").textContent = product.name;
+      document.getElementById("product-price").innerHTML = formatPrice(product.price);
+      document.getElementById("product-description").textContent = product.description;
+
+      function renderGallery() {
+        const photoId = product.images[activeView];
+        document.getElementById("gallery-main").innerHTML =
+          `<img class="product-photo" src="${unsplashUrl(photoId, { w: 900, h: 1200 })}" alt="${product.name}">`;
+
+        const thumbsEl = document.getElementById("gallery-thumbs");
+        if (product.images.length <= 1) {
+          thumbsEl.innerHTML = "";
+          return;
+        }
+
+        thumbsEl.innerHTML = product.images.map(
+          (id, i) => `
+            <button class="gallery-thumb ${i === activeView ? "active" : ""}" data-index="${i}" aria-label="Vue ${i + 1}">
+              <img class="product-photo" src="${unsplashUrl(id, { w: 200, h: 260 })}" alt="Vue ${i + 1} — ${product.name}">
+            </button>
+          `
+        ).join("");
+
+        document.querySelectorAll(".gallery-thumb").forEach((thumb) => {
+          thumb.addEventListener("click", () => {
+            activeView = Number(thumb.dataset.index);
+            renderGallery();
+          });
+        });
+      }
+
+      function renderSizes() {
+        document.getElementById("size-options").innerHTML = product.sizes
+          .map((size) => `<button class="size-option" data-size="${size}">${size}</button>`)
+          .join("");
+
+        document.querySelectorAll(".size-option").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            selectedSize = btn.dataset.size;
+            document.querySelectorAll(".size-option").forEach((b) => b.classList.remove("selected"));
+            btn.classList.add("selected");
+            document.getElementById("size-warning").classList.remove("visible");
+            updateOrderLink();
+          });
+        });
+      }
+
+      function updateOrderLink() {
+        document.getElementById("order-btn").href = whatsappOrderLink(product.name, selectedSize);
+      }
+
+      document.getElementById("order-btn").addEventListener("click", (e) => {
+        if (!selectedSize) {
+          e.preventDefault();
+          document.getElementById("size-warning").classList.add("visible");
+        }
+      });
+
+      renderGallery();
+      renderSizes();
+      updateOrderLink();
+    }
+  </script>
+</body>
+</html>
